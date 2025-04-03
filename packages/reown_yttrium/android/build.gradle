@@ -24,52 +24,54 @@ allprojects {
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
-android {
-    namespace = "com.reown.reown_yttrium"
+plugins.whenPluginAdded { plugin ->
+    if (plugin.class.simpleName == "LibraryPlugin") {
+        android {
+            namespace = "com.reown.reown_yttrium"
 
-    compileSdk = 34
+            compileSdk = 34
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+            compileOptions {
+                sourceCompatibility = JavaVersion.VERSION_1_8
+                targetCompatibility = JavaVersion.VERSION_1_8
+            }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
-    }
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8
+            }
 
-    sourceSets {
-        main.java.srcDirs += "src/main/kotlin"
-        test.java.srcDirs += "src/test/kotlin"
-    }
+            sourceSets {
+                main.java.srcDirs += "src/main/kotlin"
+                test.java.srcDirs += "src/test/kotlin"
+            }
 
-    defaultConfig {
-        minSdk = 21
-    }
+            defaultConfig {
+                minSdk = 21
+            }
 
-    buildTypes {
-        release {
-//            minifyEnabled = true
-            consumerProguardFiles 'consumer-rules.pro'
-        }
-    }
+                buildTypes {
+                    release {
+                        //            minifyEnabled = true
+                        consumerProguardFiles 'consumer-rules.pro'
+                    }
+                }
 
-    packaging {
-        jniLibs.pickFirsts.add("lib/arm64-v8a/libuniffi_yttrium.so")
-        jniLibs.pickFirsts.add("lib/armeabi-v7a/libuniffi_yttrium.so")
-//        jniLibs.pickFirsts.add("lib/arm64-v8a/libjnidispatch.so")
-//        jniLibs.pickFirsts.add("lib/armeabi-v7a/libjnidispatch.so")
-        jniLibs.pickFirsts.add("lib/**/libjnidispatch.so")
-    }
+            packaging {
+                jniLibs.pickFirsts.add("lib/arm64-v8a/libuniffi_yttrium.so")
+                jniLibs.pickFirsts.add("lib/armeabi-v7a/libuniffi_yttrium.so")
+                jniLibs.pickFirsts.add("lib/**/libjnidispatch.so")
+            }
 
-    testOptions {
-        unitTests.all {
-            useJUnitPlatform()
+            testOptions {
+                unitTests.all {
+                    useJUnitPlatform()
 
-            testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
+                    testLogging {
+                   events "passed", "skipped", "failed", "standardOut", "standardError"
+                        outputs.upToDateWhen {false}
+                        showStandardStreams = true
+                    }
+                }
             }
         }
     }
