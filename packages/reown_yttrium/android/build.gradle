@@ -25,9 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    if (project.android.hasProperty("namespace")) {
-        namespace = "com.reown.reown_yttrium"
-    }
+    namespace = "com.reown.reown_yttrium"
 
     compileSdk = 34
 
